@@ -1,0 +1,32 @@
+.error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.error-boundary__title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.error-boundary__message {
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  max-width: 420px;
+}
+
+.error-boundary__button {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.error-boundary__button:hover {
+  background: var(--accent-dark);
+}
