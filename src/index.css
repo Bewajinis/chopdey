@@ -1,13 +1,20 @@
 :root {
-  --accent: #e8590c;
-  --accent-dark: #c94a08;
-  --accent-soft: #fff0e6;
-  --text: #2b2118;
-  --text-muted: #7a6f65;
-  --bg: #fffaf6;
+  /* bright, food-market palette: yellow + red + blue */
+  --yellow: #ffc933;
+  --yellow-bright: #ffdd57;
+  --yellow-soft: #fff7dc;
+  --red: #e63946;
+  --red-dark: #c62b38;
+  --red-soft: #ffe3e5;
+  --blue: #1d6feb;
+  --blue-dark: #114eb0;
+  --blue-soft: #e3edff;
+  --text: #1f1a12;
+  --text-muted: #6d6353;
+  --bg: #fffdf4;
   --surface: #ffffff;
-  --border: #eadfd5;
-  --radius: 10px;
+  --border: #f0e6c8;
+  --radius: 12px;
 }
 
 *,
@@ -25,7 +32,7 @@ body {
 }
 
 a {
-  color: var(--accent);
+  color: var(--blue);
 }
 
 button {
@@ -34,7 +41,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 3px solid var(--blue);
   outline-offset: 2px;
 }
 

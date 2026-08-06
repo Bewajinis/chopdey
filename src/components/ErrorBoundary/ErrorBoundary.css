@@ -10,6 +10,7 @@
 .error-boundary__title {
   margin: 0;
   font-size: 1.5rem;
+  color: var(--red);
 }
 
 .error-boundary__message {
@@ -19,14 +20,15 @@
 }
 
 .error-boundary__button {
-  padding: 0.6rem 1.5rem;
+  padding: 0.65rem 1.75rem;
   border: none;
-  border-radius: var(--radius);
-  background: var(--accent);
+  border-radius: 999px;
+  background: var(--blue);
   color: #fff;
-  font-weight: 700;
+  font-weight: 800;
+  box-shadow: 0 3px 8px rgba(29, 111, 235, 0.35);
 }
 
 .error-boundary__button:hover {
-  background: var(--accent-dark);
+  background: var(--blue-dark);
 }

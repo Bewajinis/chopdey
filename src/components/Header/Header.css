@@ -1,6 +1,6 @@
 .header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--yellow-bright), var(--yellow));
+  border-bottom: 3px solid var(--red);
   padding: 0.75rem 1rem 0;
   position: sticky;
   top: 0;
@@ -17,11 +17,12 @@
 }
 
 .header__brand {
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--red);
   text-decoration: none;
   letter-spacing: -0.02em;
+  text-shadow: 1px 1px 0 #fff;
 }
 
 .header__search {
@@ -34,45 +35,52 @@
 
 .header__search-input {
   flex: 1;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  padding: 0.55rem 0.85rem;
+  border: 2px solid #fff;
+  border-radius: 999px;
   font: inherit;
-  background: var(--bg);
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(31, 26, 18, 0.12);
+}
+
+.header__search-input:focus {
+  border-color: var(--blue);
 }
 
 .header__search-button {
-  padding: 0.5rem 1rem;
+  padding: 0.55rem 1.15rem;
   border: none;
-  border-radius: var(--radius);
-  background: var(--accent);
+  border-radius: 999px;
+  background: var(--red);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(230, 57, 70, 0.35);
 }
 
 .header__search-button:hover {
-  background: var(--accent-dark);
+  background: var(--red-dark);
 }
 
 .header__login {
   margin-left: auto;
-  padding: 0.4rem 1rem;
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius);
-  background: transparent;
-  color: var(--accent);
-  font-weight: 600;
+  padding: 0.45rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(29, 111, 235, 0.35);
 }
 
 .header__login:hover {
-  background: var(--accent-soft);
+  background: var(--blue-dark);
 }
 
 .header__nav {
   display: flex;
   gap: 0.25rem;
   max-width: 900px;
-  margin: 0.25rem auto 0;
+  margin: 0.35rem auto 0;
   overflow-x: auto;
 }
 
@@ -80,33 +88,36 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.5rem 0.75rem;
-  color: var(--text-muted);
+  padding: 0.5rem 0.85rem;
+  color: var(--text);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.95rem;
-  border-bottom: 2.5px solid transparent;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 3px solid transparent;
   white-space: nowrap;
 }
 
 .header__nav-link:hover {
-  color: var(--text);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .header__nav-link.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
+  color: var(--blue-dark);
+  background: #fff;
+  border-bottom-color: var(--blue);
 }
 
 .header__cart-badge {
-  min-width: 1.25rem;
+  min-width: 1.3rem;
   padding: 0 0.3rem;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--red);
   color: #fff;
   font-size: 0.75rem;
+  font-weight: 800;
   text-align: center;
-  line-height: 1.25rem;
+  line-height: 1.3rem;
 }
 
 @media (min-width: 640px) {
