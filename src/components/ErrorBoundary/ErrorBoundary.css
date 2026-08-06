@@ -23,12 +23,12 @@
   padding: 0.65rem 1.75rem;
   border: none;
   border-radius: 999px;
-  background: var(--blue);
+  background: var(--green);
   color: #fff;
   font-weight: 800;
-  box-shadow: 0 3px 8px rgba(29, 111, 235, 0.35);
+  box-shadow: 0 3px 8px rgba(24, 164, 91, 0.35);
 }
 
 .error-boundary__button:hover {
-  background: var(--blue-dark);
+  background: var(--green-dark);
 }

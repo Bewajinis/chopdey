@@ -1,14 +1,14 @@
 :root {
-  /* bright, food-market palette: yellow + red + blue */
+  /* bright, food-market palette: yellow + red + green */
   --yellow: #ffc933;
   --yellow-bright: #ffdd57;
   --yellow-soft: #fff7dc;
   --red: #e63946;
   --red-dark: #c62b38;
   --red-soft: #ffe3e5;
-  --blue: #1d6feb;
-  --blue-dark: #114eb0;
-  --blue-soft: #e3edff;
+  --green: #18a45b;
+  --green-dark: #0f7c43;
+  --green-soft: #e0f6e9;
   --text: #1f1a12;
   --text-muted: #6d6353;
   --bg: #fffdf4;
@@ -32,7 +32,7 @@ body {
 }
 
 a {
-  color: var(--blue);
+  color: var(--green);
 }
 
 button {
@@ -41,7 +41,7 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid var(--blue);
+  outline: 3px solid var(--green);
   outline-offset: 2px;
 }
 

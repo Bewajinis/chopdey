@@ -195,7 +195,8 @@ Add styling for the Header, layout, and shared components.
 Requirements:
 
 - mobile-first: this app will mostly be used on phones
-- clean, food-app feel; use a warm accent color
+- clean, food-app feel with a bright, beautiful palette mixing yellow, red, and green: yellow for surfaces and the header, red for primary actions, green for navigation, links, and focus states
+- define the colors as CSS variables in src/index.css so every later screen reuses them
 - style the 404 page and error boundary fallback
 
 Do not add page-specific content styling yet.
@@ -770,4 +771,4 @@ Record every time you had to correct the AI here, under the prompt number that c
 
 | Prompt # | What went wrong | How I corrected it (prompt/rule change) |
 |---|---|---|
-|  |  |  |
+| 10 | "use a warm accent color" was too vague — produced a muted orange theme, then a first bright pass used blue, which I didn't want | Rewrote prompt 10 to specify the exact palette (bright yellow/red/green with role per color) and to require CSS variables in src/index.css for reuse |
