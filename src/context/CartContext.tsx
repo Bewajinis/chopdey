@@ -11,6 +11,7 @@ import {
   calculateTotals,
   type CartTotals,
 } from '../utils/cartCalculations'
+import { checkCanAddItem } from '../utils/cartRules'
 import { CART_STORAGE_KEY } from '../utils/validation'
 
 interface StoredCart {
@@ -70,12 +71,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem = useCallback(
     (item: MenuItem, venue: Venue, zone: Zone): AddItemResult => {
-      if (stored.venue && stored.venue.id !== venue.id) {
-        return {
-          ok: false,
-          reason: 'different-venue',
-          currentVenueName: stored.venue.name,
-        }
+      const check = checkCanAddItem(stored.venue, venue)
+      if (!check.ok) {
+        return check
       }
 
       const existing = stored.items.find((i) => i.id === item.id)

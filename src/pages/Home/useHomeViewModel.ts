@@ -1,32 +1,59 @@
-import { useEffect, useState } from 'react'
-import type { Venue, Zone } from '../../types'
-import { getVenuesForZone, getZoneById } from './HomeModel'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { Venue, VenueType, Zone } from '../../types'
+import { isVenueOpen } from '../../utils/availability'
+import type { Coordinates } from '../../services/locationService'
+import {
+  detectNearestZone,
+  getAllZones,
+  getVenuesForZone,
+  resolveInitialZoneId,
+  sortVenuesByDistance,
+  storeZoneId,
+} from './HomeModel'
 
-const DEFAULT_ZONE_ID = 'yaba'
+export type VenueTypeFilter = 'all' | VenueType
 
 export function useHomeViewModel() {
-  const [venues, setVenues] = useState<Venue[]>([])
+  const [zones, setZones] = useState<Zone[]>([])
   const [zone, setZone] = useState<Zone | null>(null)
+  const [venues, setVenues] = useState<Venue[]>([])
+  const [userLocation, setUserLocation] = useState<Coordinates | null>(null)
   const [loading, setLoading] = useState(true)
+  const [locationLoading, setLocationLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [locationMessage, setLocationMessage] = useState<string | null>(null)
+  const [typeFilter, setTypeFilter] = useState<VenueTypeFilter>('all')
+  const [openNowOnly, setOpenNowOnly] = useState(false)
+
+  const loadZoneVenues = useCallback(
+    async (zoneId: string, location: Coordinates | null) => {
+      const venueList = await getVenuesForZone(zoneId)
+      const sortedVenues = location
+        ? sortVenuesByDistance(venueList, location)
+        : venueList
+      setVenues(sortedVenues)
+    },
+    [],
+  )
 
   useEffect(() => {
     let cancelled = false
 
-    async function load() {
+    async function init() {
       setLoading(true)
       setError(null)
 
       try {
-        const [zoneData, venueList] = await Promise.all([
-          getZoneById(DEFAULT_ZONE_ID),
-          getVenuesForZone(DEFAULT_ZONE_ID),
-        ])
-
+        const zoneList = await getAllZones()
         if (cancelled) return
 
-        setZone(zoneData)
-        setVenues(venueList)
+        const initialZoneId = resolveInitialZoneId(zoneList)
+        const initialZone =
+          zoneList.find((item) => item.id === initialZoneId) ?? null
+
+        setZones(zoneList)
+        setZone(initialZone)
+        await loadZoneVenues(initialZoneId, null)
       } catch (err) {
         if (cancelled) return
         setError(err instanceof Error ? err.message : 'Failed to load venues.')
@@ -35,12 +62,84 @@ export function useHomeViewModel() {
       }
     }
 
-    load()
+    init()
 
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [loadZoneVenues])
 
-  return { venues, zone, loading, error }
+  const handleUseMyLocation = useCallback(async () => {
+    setLocationLoading(true)
+    setLocationMessage(null)
+    setError(null)
+
+    try {
+      const { zone: nearestZone, location, zones: zoneList } =
+        await detectNearestZone()
+
+      setZones(zoneList)
+      setZone(nearestZone)
+      setUserLocation(location)
+      storeZoneId(nearestZone.id)
+      await loadZoneVenues(nearestZone.id, location)
+    } catch (err) {
+      setLocationMessage(
+        err instanceof Error
+          ? err.message
+          : 'Could not detect your location. Pick a delivery zone below.',
+      )
+    } finally {
+      setLocationLoading(false)
+    }
+  }, [loadZoneVenues])
+
+  const handleZoneChange = useCallback(
+    async (zoneId: string) => {
+      const selectedZone = zones.find((item) => item.id === zoneId) ?? null
+      setZone(selectedZone)
+      storeZoneId(zoneId)
+      setError(null)
+      setLocationMessage(null)
+      setLoading(true)
+
+      try {
+        await loadZoneVenues(zoneId, userLocation)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load venues.')
+      } finally {
+        setLoading(false)
+      }
+    },
+    [zones, userLocation, loadZoneVenues],
+  )
+
+  const filteredVenues = useMemo(() => {
+    return venues.filter((venue) => {
+      if (typeFilter !== 'all' && venue.type !== typeFilter) {
+        return false
+      }
+      if (openNowOnly && !isVenueOpen(venue)) {
+        return false
+      }
+      return true
+    })
+  }, [venues, typeFilter, openNowOnly])
+
+  return {
+    zones,
+    zone,
+    venues: filteredVenues,
+    hasVenuesInZone: venues.length > 0,
+    loading,
+    locationLoading,
+    error,
+    locationMessage,
+    typeFilter,
+    openNowOnly,
+    setTypeFilter,
+    setOpenNowOnly,
+    handleUseMyLocation,
+    handleZoneChange,
+  }
 }
