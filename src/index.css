@@ -9,7 +9,7 @@
   --status-open-dark: #0f7c43;
   --status-open-light: #e0f6e9;
 
-  /* Accent — softened yellow for header and highlights (not a primary action color) */
+  /* Accent — softened yellow for header and highlights */
   --accent: #fff3d0;
   --accent-dark: #ffe69a;
   --accent-light: #fffbf0;
@@ -17,10 +17,14 @@
   /* Neutrals */
   --text: #1f1a12;
   --text-muted: #6d6353;
-  --bg: #fffdf4;
+  --bg: #fefcf7;
   --surface: #ffffff;
   --border: #f0e6c8;
   --radius: 12px;
+
+  /* Typography */
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
 }
 
 *,
@@ -31,19 +35,28 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
-  background-image: 
-    radial-gradient(circle at 20% 35%, rgba(230, 57, 70, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 75% 65%, rgba(255, 243, 208, 0.5) 0%, transparent 50%);
+  background-image:
+    radial-gradient(ellipse at 0% 0%, rgba(230, 57, 70, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(255, 230, 154, 0.35) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, rgba(255, 243, 208, 0.4) 0%, transparent 50%);
   background-attachment: fixed;
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.6;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.25;
 }
 
 a {
   color: var(--brand);
+  text-decoration-skip-ink: auto;
 }
 
 button {
@@ -59,5 +72,5 @@ button {
 .page {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.25rem 1.5rem;
 }
