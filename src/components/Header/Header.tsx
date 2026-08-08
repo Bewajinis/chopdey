@@ -1,9 +1,11 @@
 import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { useEffect, useState, type FormEvent } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import './Header.css'
 
 function Header() {
+  const { user, logout } = useAuth()
   const { itemCount } = useCart()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -17,6 +19,11 @@ function Header() {
     event.preventDefault()
     const trimmed = searchQuery.trim()
     navigate(trimmed ? `/search?q=${encodeURIComponent(trimmed)}` : '/search')
+  }
+
+  async function handleLogout() {
+    await logout()
+    navigate('/', { replace: true })
   }
 
   return (
@@ -44,9 +51,26 @@ function Header() {
           </button>
         </form>
 
-        <button type="button" className="header__login">
-          Login
-        </button>
+        <div className="header__auth">
+          {user ? (
+            <>
+              <span className="header__user" title={user.email ?? undefined}>
+                {user.email}
+              </span>
+              <button
+                type="button"
+                className="header__logout"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/auth" className="header__login">
+              Login
+            </Link>
+          )}
+        </div>
       </div>
 
       <nav className="header__nav" aria-label="Main navigation">

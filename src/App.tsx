@@ -1,5 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
+import {
+  GuestRoute,
+  ProtectedRoute,
+} from './components/ProtectedRoute/ProtectedRoute'
 import Header from './components/Header/Header'
 import HomeView from './pages/Home/HomeView'
 import VenueView from './pages/Venue/VenueView'
@@ -13,19 +18,42 @@ import NotFoundView from './pages/NotFound/NotFoundView'
 function App() {
   return (
     <BrowserRouter>
-      <CartProvider>
-        <Header />
-        <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/venue/:id" element={<VenueView />} />
-        <Route path="/search" element={<SearchView />} />
-        <Route path="/favourites" element={<FavouritesView />} />
-        <Route path="/orders" element={<OrdersView />} />
-        <Route path="/cart" element={<CartView />} />
-        <Route path="/auth" element={<AuthView />} />
-        <Route path="*" element={<NotFoundView />} />
-        </Routes>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomeView />} />
+            <Route path="/venue/:id" element={<VenueView />} />
+            <Route path="/search" element={<SearchView />} />
+            <Route
+              path="/favourites"
+              element={
+                <ProtectedRoute>
+                  <FavouritesView />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <ProtectedRoute>
+                  <OrdersView />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/cart" element={<CartView />} />
+            <Route
+              path="/auth"
+              element={
+                <GuestRoute>
+                  <AuthView />
+                </GuestRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundView />} />
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

@@ -1,9 +1,11 @@
 import { useCallback, useState } from 'react'
 import type { Order } from '../../types'
+import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import { placeOrder as placeOrderInFirestore } from './CartModel'
 
 export function useCartViewModel() {
+  const { user } = useAuth()
   const {
     items,
     venue,
@@ -45,6 +47,9 @@ export function useCartViewModel() {
       landmark,
       status: 'pending',
       createdAt: new Date().toISOString(),
+      ...(user
+        ? { uid: user.uid, customerEmail: user.email ?? undefined }
+        : {}),
     }
 
     try {
@@ -59,7 +64,7 @@ export function useCartViewModel() {
     } finally {
       setLoading(false)
     }
-  }, [venue, zone, totals, items, phone, deliveryAddress, landmark, clearCart])
+  }, [user, venue, zone, totals, items, phone, deliveryAddress, landmark, clearCart])
 
   return {
     items,

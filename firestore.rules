@@ -1,8 +1,32 @@
 rules_version = '2';
 
+// Rules playground testing (Firebase Console → Firestore → Rules → Rules playground):
+// 1. Guest create order WITHOUT uid → should ALLOW
+// 2. Guest read any order → should DENY
+// 3. Signed-in user create order WITH uid == auth.uid → should ALLOW
+// 4. Signed-in user create order WITH wrong uid → should DENY
+// 5. User A read order where uid == User B → should DENY
+// 6. User A read order where uid == User A → should ALLOW
+// 7. User A write users/B/favourites/x → should DENY
+// 8. User A write users/A/favourites/x → should ALLOW
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Zones and venues: public read, no client writes (seeded via script / console)
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isGuestOrderCreate() {
+      return !isSignedIn()
+        && (!('uid' in request.resource.data) || request.resource.data.uid == null);
+    }
+
+    function isOwnOrderCreate() {
+      return isSignedIn()
+        && request.resource.data.keys().hasAll(['uid'])
+        && request.resource.data.uid == request.auth.uid;
+    }
+
     match /zones/{zoneId} {
       allow read: if true;
       allow write: if false;
@@ -13,13 +37,16 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // Guest orders: anyone can create, nobody can read or update from the client
     match /orders/{orderId} {
-      allow create: if true;
-      allow read, update, delete: if false;
+      allow create: if isGuestOrderCreate() || isOwnOrderCreate();
+      allow read: if isSignedIn() && resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
     }
 
-    // Everything else: denied
+    match /users/{userId}/{document=**} {
+      allow read, write: if isSignedIn() && request.auth.uid == userId;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

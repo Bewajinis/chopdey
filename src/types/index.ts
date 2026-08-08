@@ -54,4 +54,6 @@ export interface Order {
   landmark: string
   status: OrderStatus
   createdAt: string
+  uid?: string
+  customerEmail?: string
 }

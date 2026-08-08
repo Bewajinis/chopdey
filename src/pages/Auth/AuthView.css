@@ -1,0 +1,74 @@
+.auth__card {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(31, 26, 18, 0.08);
+}
+
+.auth__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.45rem;
+}
+
+.auth__subtitle {
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.auth__form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.auth__label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.auth__input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font: inherit;
+  background: var(--surface);
+}
+
+.auth__submit {
+  margin-top: 0.25rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 800;
+}
+
+.auth__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.auth__submit:not(:disabled):hover {
+  background: var(--red-dark);
+}
+
+.auth__toggle {
+  width: 100%;
+  margin-top: 0.85rem;
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.auth__toggle:hover {
+  text-decoration: underline;
+}
