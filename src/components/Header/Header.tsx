@@ -1,9 +1,24 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useCart } from '../../context/CartContext'
 import './Header.css'
 
 function Header() {
   const { itemCount } = useCart()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') ?? '')
+
+  useEffect(() => {
+    setSearchQuery(searchParams.get('q') ?? '')
+  }, [searchParams])
+
+  function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const trimmed = searchQuery.trim()
+    navigate(trimmed ? `/search?q=${encodeURIComponent(trimmed)}` : '/search')
+  }
+
   return (
     <header className="header">
       <div className="header__top">
@@ -13,7 +28,7 @@ function Header() {
 
         <form
           className="header__search"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSearchSubmit}
           role="search"
         >
           <input
@@ -21,6 +36,8 @@ function Header() {
             className="header__search-input"
             placeholder="Search for food…"
             aria-label="Search for food"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button type="submit" className="header__search-button">
             Search

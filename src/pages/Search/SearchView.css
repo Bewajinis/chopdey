@@ -1,0 +1,47 @@
+.search__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+}
+
+.search__zone {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.search__validation {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius);
+  background: var(--red-soft);
+  color: var(--red-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.search__results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.search__result {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.search__venue {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.search__venue-link {
+  text-decoration: none;
+}
+
+.search__venue-link:hover {
+  text-decoration: underline;
+}

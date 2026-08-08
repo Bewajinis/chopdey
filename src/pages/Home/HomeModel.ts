@@ -6,10 +6,9 @@ import {
   getUserLocation,
   type Coordinates,
 } from '../../services/locationService'
+import { resolveInitialZoneId } from '../../utils/zoneStorage'
 
-export const ZONE_STORAGE_KEY = 'chopdey-selected-zone'
-
-const DEFAULT_ZONE_ID = 'yaba'
+export { getStoredZoneId, storeZoneId, resolveInitialZoneId } from '../../utils/zoneStorage'
 
 export async function getAllZones(): Promise<Zone[]> {
   return getZones()
@@ -17,33 +16,6 @@ export async function getAllZones(): Promise<Zone[]> {
 
 export async function getVenuesForZone(zoneId: string): Promise<Venue[]> {
   return getVenuesByZone(zoneId)
-}
-
-export function getStoredZoneId(): string | null {
-  try {
-    return localStorage.getItem(ZONE_STORAGE_KEY)
-  } catch {
-    return null
-  }
-}
-
-export function storeZoneId(zoneId: string): void {
-  try {
-    localStorage.setItem(ZONE_STORAGE_KEY, zoneId)
-  } catch {
-    // Ignore storage failures (private browsing, quota exceeded).
-  }
-}
-
-export function resolveInitialZoneId(zones: Zone[]): string {
-  const stored = getStoredZoneId()
-  if (stored && zones.some((zone) => zone.id === stored)) {
-    return stored
-  }
-  if (zones.some((zone) => zone.id === DEFAULT_ZONE_ID)) {
-    return DEFAULT_ZONE_ID
-  }
-  return zones[0]?.id ?? DEFAULT_ZONE_ID
 }
 
 export function sortVenuesByDistance(
@@ -65,4 +37,9 @@ export async function detectNearestZone(): Promise<{
   const [location, zones] = await Promise.all([getUserLocation(), getZones()])
   const zone = findNearestZone(location, zones)
   return { zone, location, zones }
+}
+
+export async function getActiveZoneId(): Promise<string> {
+  const zones = await getZones()
+  return resolveInitialZoneId(zones)
 }
