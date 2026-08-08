@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { CartProvider } from './context/CartContext'
 import Header from './components/Header/Header'
 import HomeView from './pages/Home/HomeView'
 import VenueView from './pages/Venue/VenueView'
@@ -12,8 +13,9 @@ import NotFoundView from './pages/NotFound/NotFoundView'
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
+      <CartProvider>
+        <Header />
+        <Routes>
         <Route path="/" element={<HomeView />} />
         <Route path="/venue/:id" element={<VenueView />} />
         <Route path="/search" element={<SearchView />} />
@@ -22,7 +24,8 @@ function App() {
         <Route path="/cart" element={<CartView />} />
         <Route path="/auth" element={<AuthView />} />
         <Route path="*" element={<NotFoundView />} />
-      </Routes>
+        </Routes>
+      </CartProvider>
     </BrowserRouter>
   )
 }

@@ -1,0 +1,154 @@
+.venue__header {
+  margin-bottom: 1.25rem;
+}
+
+.venue__image,
+.venue__placeholder {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 0.85rem;
+}
+
+.venue__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.venue__placeholder--buka {
+  background: linear-gradient(135deg, var(--yellow), var(--red));
+}
+
+.venue__placeholder--restaurant {
+  background: linear-gradient(135deg, var(--green), var(--yellow));
+}
+
+.venue__name {
+  margin: 0 0 0.4rem;
+  font-size: 1.5rem;
+}
+
+.venue__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.venue__badge {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.venue__badge--buka {
+  background: var(--red);
+}
+
+.venue__badge--restaurant {
+  background: var(--green);
+}
+
+.venue__status--open {
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.venue__status--closed {
+  color: var(--red-dark);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.venue__pack-fee {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.venue__section {
+  margin-bottom: 1.25rem;
+}
+
+.venue__category {
+  margin: 0 0 0.6rem;
+  font-size: 1.05rem;
+  color: var(--green-dark);
+}
+
+.venue__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.venue__dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 26, 18, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+
+.venue__dialog {
+  width: 100%;
+  max-width: 380px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: 0 8px 24px rgba(31, 26, 18, 0.2);
+}
+
+.venue__dialog-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.venue__dialog-text {
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.venue__dialog-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.venue__dialog-cancel,
+.venue__dialog-confirm {
+  padding: 0.5rem 0.85rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.venue__dialog-cancel {
+  background: var(--border);
+  color: var(--text);
+}
+
+.venue__dialog-confirm {
+  background: var(--red);
+  color: #fff;
+}
+
+.venue__dialog-confirm:hover {
+  background: var(--red-dark);
+}

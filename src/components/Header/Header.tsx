@@ -1,7 +1,9 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useCart } from '../../context/CartContext'
 import './Header.css'
 
 function Header() {
+  const { itemCount } = useCart()
   return (
     <header className="header">
       <div className="header__top">
@@ -43,7 +45,7 @@ function Header() {
         <NavLink to="/cart" className="header__nav-link header__cart">
           Cart
           <span className="header__cart-badge" aria-label="items in cart">
-            0
+            {itemCount}
           </span>
         </NavLink>
       </nav>

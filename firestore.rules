@@ -13,6 +13,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Guest orders: anyone can create, nobody can read or update from the client
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
     // Everything else: denied
     match /{document=**} {
       allow read, write: if false;
