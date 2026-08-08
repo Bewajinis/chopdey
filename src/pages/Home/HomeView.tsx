@@ -2,6 +2,7 @@ import Loader from '../../components/Loader/Loader'
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import EmptyState from '../../components/EmptyState/EmptyState'
 import VenueCard from '../../components/VenueCard/VenueCard'
+import { getVenueDeliveryEstimate } from '../../utils/deliveryEstimate'
 import { useHomeViewModel } from './useHomeViewModel'
 import './HomeView.css'
 
@@ -21,6 +22,8 @@ function HomeView() {
     setOpenNowOnly,
     handleUseMyLocation,
     handleZoneChange,
+    toggleFavourite,
+    isFavourited,
   } = useHomeViewModel()
 
   if (loading && !zone) {
@@ -122,7 +125,11 @@ function HomeView() {
             <li key={venue.id}>
               <VenueCard
                 venue={venue}
-                estimatedDeliveryMinutes={zone?.estimatedDeliveryMinutes}
+                estimatedDeliveryMinutes={
+                  zone ? getVenueDeliveryEstimate(venue, zone) : undefined
+                }
+                isFavourited={isFavourited(venue.id)}
+                onToggleFavourite={() => toggleFavourite(venue)}
               />
             </li>
           ))}

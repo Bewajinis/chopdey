@@ -33,6 +33,10 @@ function mapVenue(id: string, data: Record<string, unknown>): Venue {
     closingHour: data.closingHour as number,
     packFee: data.packFee as number,
     menu: data.menu as Venue['menu'],
+    rating: (data.rating as number) ?? 0,
+    reviewCount: (data.reviewCount as number) ?? 0,
+    priceRange: (data.priceRange as Venue['priceRange']) ?? '₦',
+    distanceKm: (data.distanceKm as number) ?? 0,
   }
 }
 

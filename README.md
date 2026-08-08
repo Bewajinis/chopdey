@@ -1,32 +1,49 @@
-# React + TypeScript + Vite
+# ChopDey
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A Lagos food ordering app built with React, TypeScript, Vite, and Firebase.
 
-Currently, two official plugins are available:
+## AI-Assisted Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Artificial Intelligence was used throughout the development of ChopDey as a software engineering assistant. AI helped scaffold the project structure, generate React and TypeScript components, create Firebase integration, implement the MVVM architecture, produce reusable UI components, and generate Firestore services and security rules.
 
-## React Compiler
+Development followed a structured prompt-driven workflow using PROMPTS.md, where each prompt focused on a specific feature or milestone. After each prompt, the generated code was reviewed, tested, and integrated into the project before moving to the next phase.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+AI also assisted in producing documentation, improving code consistency, and accelerating repetitive implementation tasks while allowing the developer to focus on architecture, validation, testing, and refinement.
 
-## Expanding the Oxlint configuration
+## Manual Improvements and Refactoring
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+During development, several AI-generated implementations were reviewed and improved manually to ensure correctness, maintainability, and alignment with project requirements.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+Examples include:
+
+- Replaced duplicated Zone and Venue interfaces with the shared TypeScript models from the project's central types module.
+- Fixed missing Firestore imports (`getDoc`, `getDocs`, `query`, `where`) that prevented compilation.
+- Added validation for missing Firestore documents before accessing document data.
+- Improved error handling by replacing raw Firebase errors with user-friendly messages.
+- Removed unused helper functions and redundant code.
+- Verified that generated services followed the required MVVM architecture and respected the separation between services, models, view models, and views.
+- Updated project prompts and maintained a correction log to improve consistency for future AI-generated code.
+- Reviewed generated code for readability, consistency, and adherence to the project's architecture before committing changes.
+
+## Tech Stack
+
+- **Frontend:** React, TypeScript, Vite
+- **Backend:** Firebase (Firestore, Authentication)
+- **Architecture:** MVVM (Model-View-ViewModel)
+- **Linting:** Oxlint
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run lint` | Run linter |
+| `npm run seed` | Seed Firestore with venue data |

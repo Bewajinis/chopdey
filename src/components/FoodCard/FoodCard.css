@@ -32,14 +32,14 @@
 .food-card__price {
   margin: 0;
   font-weight: 700;
-  color: var(--green-dark);
+  color: var(--brand-dark);
 }
 
 .food-card__status {
   margin: 0.25rem 0 0;
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--red);
+  color: var(--brand);
 }
 
 .food-card__add {
@@ -47,7 +47,7 @@
   padding: 0.45rem 0.85rem;
   border: none;
   border-radius: 999px;
-  background: var(--red);
+  background: var(--brand);
   color: #fff;
   font-weight: 700;
   font-size: 0.85rem;
@@ -60,5 +60,5 @@
 }
 
 .food-card__add:not(:disabled):hover {
-  background: var(--red-dark);
+  background: var(--brand-dark);
 }

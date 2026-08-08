@@ -16,7 +16,7 @@
   padding: 0.55rem 1rem;
   border: none;
   border-radius: 999px;
-  background: var(--green);
+  background: var(--brand);
   color: #fff;
   font-weight: 700;
 }
@@ -27,7 +27,7 @@
 }
 
 .home__location-btn:not(:disabled):hover {
-  background: var(--green-dark);
+  background: var(--brand-dark);
 }
 
 .home__zone-label {
@@ -49,7 +49,7 @@
   margin: 0.75rem 0 0;
   padding: 0.65rem 0.85rem;
   border-radius: var(--radius);
-  background: var(--yellow-soft);
+  background: var(--accent-light);
   color: var(--text);
   font-size: 0.9rem;
 }
@@ -79,8 +79,8 @@
 }
 
 .home__chip--active {
-  background: var(--green);
-  border-color: var(--green);
+  background: var(--brand);
+  border-color: var(--brand);
   color: #fff;
 }
 
@@ -108,5 +108,17 @@
 
   .home__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .home__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .home__grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

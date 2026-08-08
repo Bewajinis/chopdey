@@ -1,4 +1,4 @@
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore'
 import type { Order } from '../types'
 import { db } from './firebaseService'
 
@@ -26,5 +26,27 @@ export async function saveOrder(order: Order): Promise<string> {
     return docRef.id
   } catch (error) {
     throw new Error(`Failed to place order: ${describeError(error)}`)
+  }
+}
+
+export async function getOrders(userId: string): Promise<Order[]> {
+  if (!userId) {
+    throw new Error('A user is required to load orders.')
+  }
+
+  try {
+    const ordersRef = collection(db, 'orders')
+    const q = query(
+      ordersRef,
+      where('uid', '==', userId),
+      orderBy('createdAt', 'desc'),
+    )
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Order[]
+  } catch (error) {
+    throw new Error(`Failed to load orders: ${describeError(error)}`)
   }
 }

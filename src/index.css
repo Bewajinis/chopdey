@@ -1,14 +1,20 @@
 :root {
-  /* bright, food-market palette: yellow + red + green */
-  --yellow: #ffc933;
-  --yellow-bright: #ffdd57;
-  --yellow-soft: #fff7dc;
-  --red: #e63946;
-  --red-dark: #c62b38;
-  --red-soft: #ffe3e5;
-  --green: #18a45b;
-  --green-dark: #0f7c43;
-  --green-soft: #e0f6e9;
+  /* Brand — red is the dominant color (logo, CTAs, primary actions) */
+  --brand: #e63946;
+  --brand-dark: #c62b38;
+  --brand-light: #ffe3e5;
+
+  /* Status — green reserved exclusively for positive states */
+  --status-open: #18a45b;
+  --status-open-dark: #0f7c43;
+  --status-open-light: #e0f6e9;
+
+  /* Accent — softened yellow for header and highlights (not a primary action color) */
+  --accent: #fff3d0;
+  --accent-dark: #ffe69a;
+  --accent-light: #fffbf0;
+
+  /* Neutrals */
   --text: #1f1a12;
   --text-muted: #6d6353;
   --bg: #fffdf4;
@@ -27,12 +33,17 @@ body {
   margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
   background: var(--bg);
+  background-image: 
+    radial-gradient(circle at 20% 35%, rgba(230, 57, 70, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 75% 65%, rgba(255, 243, 208, 0.5) 0%, transparent 50%);
+  background-attachment: fixed;
   color: var(--text);
   line-height: 1.5;
+  min-height: 100vh;
 }
 
 a {
-  color: var(--green);
+  color: var(--brand);
 }
 
 button {
@@ -41,12 +52,12 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid var(--green);
+  outline: 3px solid var(--brand);
   outline-offset: 2px;
 }
 
 .page {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 1rem;
 }

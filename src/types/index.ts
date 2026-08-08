@@ -18,6 +18,8 @@ export interface MenuItem {
   availableUntil: number
 }
 
+export type PriceRange = '₦' | '₦₦' | '₦₦₦'
+
 export interface Venue {
   id: string
   name: string
@@ -25,11 +27,15 @@ export interface Venue {
   zoneId: string
   lat: number
   lng: number
-  imageUrl: string
+  imageUrl?: string
   openingHour: number
   closingHour: number
   packFee: number
   menu: MenuItem[]
+  rating: number
+  reviewCount: number
+  priceRange: PriceRange
+  distanceKm: number
 }
 
 export interface CartItem extends MenuItem {

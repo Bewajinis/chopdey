@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { Venue, VenueType, Zone } from '../../types'
+import { useAuth } from '../../context/AuthContext'
 import { isVenueOpen } from '../../utils/availability'
 import type { Coordinates } from '../../services/locationService'
+import {
+  addFavourite,
+  getFavourites,
+  removeFavourite,
+} from '../../services/favouritesService'
 import {
   detectNearestZone,
   getAllZones,
@@ -14,10 +21,14 @@ import {
 export type VenueTypeFilter = 'all' | VenueType
 
 export function useHomeViewModel() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
   const [zones, setZones] = useState<Zone[]>([])
   const [zone, setZone] = useState<Zone | null>(null)
   const [venues, setVenues] = useState<Venue[]>([])
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null)
+  const [favouriteIds, setFavouriteIds] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(true)
   const [locationLoading, setLocationLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -126,6 +137,65 @@ export function useHomeViewModel() {
     })
   }, [venues, typeFilter, openNowOnly])
 
+  useEffect(() => {
+    if (!user) {
+      setFavouriteIds(new Set())
+      return
+    }
+
+    let cancelled = false
+
+    async function loadFavourites() {
+      try {
+        const favourites = await getFavourites(user!.uid)
+        if (!cancelled) {
+          setFavouriteIds(new Set(favourites.map((v) => v.id)))
+        }
+      } catch {
+        // Silently fail — favourites are non-critical
+      }
+    }
+
+    loadFavourites()
+
+    return () => {
+      cancelled = true
+    }
+  }, [user])
+
+  const toggleFavourite = useCallback(
+    async (venue: Venue) => {
+      if (!user) {
+        navigate('/auth')
+        return
+      }
+
+      const isFav = favouriteIds.has(venue.id)
+
+      try {
+        if (isFav) {
+          await removeFavourite(user.uid, venue.id)
+          setFavouriteIds((prev) => {
+            const next = new Set(prev)
+            next.delete(venue.id)
+            return next
+          })
+        } else {
+          await addFavourite(user.uid, venue)
+          setFavouriteIds((prev) => new Set(prev).add(venue.id))
+        }
+      } catch {
+        // Silently fail — favourite toggle is non-critical
+      }
+    },
+    [user, favouriteIds, navigate],
+  )
+
+  const isFavourited = useCallback(
+    (venueId: string) => favouriteIds.has(venueId),
+    [favouriteIds],
+  )
+
   return {
     zones,
     zone,
@@ -141,5 +211,7 @@ export function useHomeViewModel() {
     setOpenNowOnly,
     handleUseMyLocation,
     handleZoneChange,
+    toggleFavourite,
+    isFavourited,
   }
 }
